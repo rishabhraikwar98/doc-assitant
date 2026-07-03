@@ -3,6 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Workspace } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function WorkspaceSwitcher({
   workspaces,
@@ -39,42 +48,63 @@ export default function WorkspaceSwitcher({
 
   return (
     <div className="space-y-2">
-      <select
+      <Select
         value={activeId}
-        onChange={(e) => router.push(`/dashboard/${e.target.value}`)}
-        className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-violet-500"
+        onValueChange={(v) => router.push(`/dashboard/${v}`)}
       >
-        {workspaces.map((ws) => (
-          <option key={ws.id} value={ws.id}>
-            {ws.name}
-          </option>
-        ))}
-      </select>
+        <SelectTrigger className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className="z-50 border bg-background shadow-lg">
+          {workspaces.map((ws) => (
+            <SelectItem className="cursor-pointer" key={ws.id} value={ws.id}>
+              {ws.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {creating ? (
-        <form onSubmit={handleCreate} className="flex gap-1">
-          <input
+        <form onSubmit={handleCreate} className="space-y-2">
+          <Input
             autoFocus
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Workspace name"
-            className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-sm text-neutral-100 outline-none focus:border-violet-500"
+            className="h-9 text-sm"
           />
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-lg bg-violet-600 px-2 text-sm text-white hover:bg-violet-500 disabled:opacity-50"
-          >
-            {loading ? "..." : "Add"}
-          </button>
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              size="sm"
+              disabled={loading}
+              className="flex-1"
+            >
+              {loading ? "Adding..." : "Add"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="flex-1"
+              onClick={() => {
+                setCreating(false);
+                setName("");
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       ) : (
-        <button
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full border-dashed text-xs"
           onClick={() => setCreating(true)}
-          className="w-full rounded-lg border border-dashed border-neutral-700 py-1.5 text-xs text-neutral-400 hover:border-violet-500 hover:text-violet-400"
         >
           + New workspace
-        </button>
+        </Button>
       )}
     </div>
   );

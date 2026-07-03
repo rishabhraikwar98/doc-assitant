@@ -3,6 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export default function SignupPage() {
   const supabase = createClient();
@@ -37,66 +41,70 @@ export default function SignupPage() {
 
   if (done) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4">
-        <div className="w-full max-w-sm rounded-xl border border-neutral-800 bg-neutral-900 p-8 text-center">
-          <h1 className="mb-2 text-xl font-semibold text-neutral-100">Check your email</h1>
-          <p className="text-sm text-neutral-400">
-            We sent a confirmation link to <strong>{email}</strong>. Click it, then come back and sign in.
-          </p>
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Check your email</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              We sent a confirmation link to <strong>{email}</strong>. Click it,
+              then come back and sign in.
+            </p>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4">
-      <div className="w-full max-w-sm rounded-xl border border-neutral-800 bg-neutral-900 p-8">
-        <h1 className="mb-1 text-xl font-semibold text-neutral-100">Create account</h1>
-        <p className="mb-6 text-sm text-neutral-400">
-          Multi-workspace document assistant
-        </p>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Create account</CardTitle>
+          <CardDescription>Multi-workspace document assistant</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                required
+                minLength={6}
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm text-neutral-300">Email</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-violet-500"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm text-neutral-300">Password</label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-100 outline-none focus:border-violet-500"
-            />
-          </div>
+            {error && <p className="text-sm text-destructive">{error}</p>}
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? "Creating account..." : "Sign up"}
+            </Button>
+          </form>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-violet-600 py-2 text-sm font-medium text-white transition hover:bg-violet-500 disabled:opacity-50"
-          >
-            {loading ? "Creating account..." : "Sign up"}
-          </button>
-        </form>
-
-        <p className="mt-4 text-center text-sm text-neutral-400">
-          Already have an account?{" "}
-          <Link href="/login" className="text-violet-400 hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </div>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary hover:underline">
+              Sign in
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }
