@@ -6,6 +6,7 @@ import { chunkText } from "@/lib/chunking";
 import { embedTexts } from "@/lib/gemini";
 
 export const runtime = "nodejs"; // pdf-parse/mammoth need Node, not Edge
+export const maxDuration = 60; // Vercel Hobby max without Fluid Compute
 
 const ALLOWED_EXT = ["pdf", "txt", "md", "docx"];
 const MAX_BYTES = 8 * 1024 * 1024; // 8MB — keep well under serverless body limits
