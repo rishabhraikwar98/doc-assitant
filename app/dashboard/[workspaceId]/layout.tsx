@@ -1,12 +1,11 @@
 import { redirect, notFound } from "next/navigation";
-import Link from "next/link";
 import { Menu } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import WorkspaceSwitcher from "@/components/WorkspaceSwitcher";
 import SignOutButton from "@/components/SignOutButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
+import DashboardNav from "@/components/DashboardNav";
 export default async function WorkspaceLayout({
   children,
   params,
@@ -32,12 +31,6 @@ export default async function WorkspaceLayout({
   const activeWorkspace = workspaces.find((w) => w.id === workspaceId);
   if (!activeWorkspace) notFound();
 
-  const nav = [
-    { href: `/dashboard/${workspaceId}`, label: "Chat" },
-    { href: `/dashboard/${workspaceId}/documents`, label: "Documents" },
-    { href: `/dashboard/${workspaceId}/tools`, label: "Tool Log" },
-  ];
-
   const sidebarContent = (
     <div className="flex h-full flex-col gap-1 p-5">
       <div className="mb-6">
@@ -46,21 +39,11 @@ export default async function WorkspaceLayout({
         </p>
         <WorkspaceSwitcher workspaces={workspaces} activeId={workspaceId} />
       </div>
-
-      <nav className="flex flex-1 flex-col gap-1">
-        {nav.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-accent hover:text-foreground"
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
+      <DashboardNav workspaceId={workspaceId} />
       <div className="border-t pt-4">
-        <p className="mb-2 truncate text-xs text-muted-foreground">{user.email}</p>
+        <p className="mb-2 truncate text-xs text-muted-foreground">
+          {user.email}
+        </p>
         <SignOutButton />
       </div>
     </div>
@@ -88,7 +71,7 @@ export default async function WorkspaceLayout({
         {sidebarContent}
       </aside>
 
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-hidden">{children}</main>
     </div>
   );
 }

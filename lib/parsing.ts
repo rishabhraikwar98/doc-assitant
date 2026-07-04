@@ -7,11 +7,15 @@ export async function extractText(
   const ext = filename.toLowerCase().split(".").pop();
 
   if (ext === "pdf") {
-    // Lazy-required: pdf-parse touches the filesystem on import in some
-    // versions, so importing it only when needed avoids build-time issues.
-    const pdfParse = (await import("pdf-parse")) as any;
-    const result = await pdfParse(buffer);
-    return result.text;
+    const { PDFParse } = await import("pdf-parse");
+    const parser = new PDFParse({ data: buffer });
+    try {
+      const result = await parser.getText();
+      return result.text;
+    } finally {
+      // Always release parser resources, even if getText() throws.
+      await parser.destroy();
+    }
   }
 
   if (ext === "docx") {

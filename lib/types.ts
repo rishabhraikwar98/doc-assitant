@@ -49,3 +49,4 @@ export type ToolCall = {
   error_message: string | null;
   created_at: string;
 };
+export const RETRIEVAL_SIMILARITY_THRESHOLD = 0.55;
