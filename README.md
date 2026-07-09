@@ -5,7 +5,7 @@ with citations, and tool calling — built with Next.js, Supabase (Postgres +
 pgvector), and the Gemini API.
 
 **Live URL:** [https://doc-assitant.vercel.app/login]
-**Throwaway login:** email: `[rishabh.raikwar.work@gmail.com]` / password: `[Pass@123]`
+**Throwaway login:** email: `rishabh.raikwar.work@gmail.com` / password: `Pass@123`
 (or: sign up fresh — signup is open)
 
 ## What it does
