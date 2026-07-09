@@ -47,7 +47,7 @@ export default function MarketingPage() {
             Only the ones in <em className="not-italic text-[#E8A33D]">this room.</em>
           </h1>
           <p className="mb-10 max-w-[56ch] text-lg text-[#8B93A7]">
-            Upload your files into a workspace, and Annex answers questions using
+            Upload your files into a workspace, and DocAssistant answers questions using
             only what&apos;s in that room — with sources, every time. Switch to a
             different workspace and ask the same thing: it won&apos;t know. Your
             data never crosses the walls.
@@ -149,7 +149,7 @@ export default function MarketingPage() {
           <div className="flex flex-wrap overflow-hidden rounded-xl border border-white/10">
             {[
               { verb: "Upload", desc: "PDFs, Word docs, or plain text. Re-upload the same file and nothing gets duplicated." },
-              { verb: "Understand", desc: "Annex reads and organizes your documents behind the scenes — no setup required." },
+              { verb: "Understand", desc: "DocAssistant reads and organizes your documents behind the scenes — no setup required." },
               { verb: "Ask", desc: "Type a question the way you'd ask a colleague who'd actually read the file." },
               { verb: "Stay private", desc: "Only this workspace's documents are ever considered — nothing leaks in from another." },
               { verb: "Get an answer", desc: "Grounded in your files, with a source cited. If it's not in there, you'll be told plainly." },
@@ -175,9 +175,9 @@ export default function MarketingPage() {
 
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
             {[
-              { title: "Answers you can check", desc: "Every answer points back to the document it came from. When your files don't cover a question, Annex says so instead of making something up." },
+              { title: "Answers you can check", desc: "Every answer points back to the document it came from. When your files don't cover a question, DocAssistance says so instead of making something up." },
               { title: "Private by default", desc: "Each workspace is its own room. What you upload to one never shows up in, or informs answers in, another — even though everything lives on the same platform." },
-              { title: "Gets things done, not just answers", desc: "Ask Annex to save a task or send an update, and it will — then keep a record of exactly what it did, so nothing happens quietly." },
+              { title: "Gets things done, not just answers", desc: "Ask DocAssistance to save a task or send an update, and it will — then keep a record of exactly what it did, so nothing happens quietly." },
               { title: "Doesn't fall over", desc: "Weird files, flaky connections, unexpected requests — handled gracefully, with a clear explanation instead of a silent failure or a crash." },
             ].map((cap, i) => (
               <div key={i} className="bg-[#121A2E] p-7">
